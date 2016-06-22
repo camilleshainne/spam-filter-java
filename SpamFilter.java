@@ -125,7 +125,7 @@ public class SpamFilter{
 
 	public static void main(String[] args){
 		SpamFilter spamfilter = new SpamFilter();
-		spamfilter.filterSpam(new File("input.txt"));
+		spamfilter.filterSpam(new File(args[0])); // input file
 		spamfilter.filter();
 		spamfilter.saveOutput();
 	}

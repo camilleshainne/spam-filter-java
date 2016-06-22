@@ -16,8 +16,8 @@ public class SpamFilter{
 	int totalSize, totalLines, k;
 
 	public SpamFilter(){
-		spam = new BagOfWords("spam.txt");
-		ham = new BagOfWords("ham.txt");
+		spam = new BagOfWords(args[1]); // second argument for spam training data
+		ham = new BagOfWords(args[2]); // third argument for ham training data
 		totalSize = this.getDictionarySize();
 		totalLines = spam.lines + ham.lines;
 	}
@@ -125,7 +125,7 @@ public class SpamFilter{
 
 	public static void main(String[] args){
 		SpamFilter spamfilter = new SpamFilter();
-		spamfilter.filterSpam(new File(args[0])); // input file
+		spamfilter.filterSpam(new File(args[0])); // first argument for input file
 		spamfilter.filter();
 		spamfilter.saveOutput();
 	}

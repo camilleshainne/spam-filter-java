@@ -1,4 +1,8 @@
-//import java.io.*;
+/*
+   To COMPILE: javac SpamFilter.java
+   To RUN: javac SpamFilter [input_file].txt [spam_data].txt [ham_data].txt
+*/
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,10 +20,10 @@ public class SpamFilter{
 	int totalSize, totalLines, k;
 
 	public SpamFilter(String spamFile, String hamFile){
-		spam = new BagOfWords(spamFile); // second argument for spam training data
-		ham = new BagOfWords(hamFile); // third argument for ham training data
-		totalSize = this.getDictionarySize();
-		totalLines = spam.lines + ham.lines;
+		spam = new BagOfWords(spamFile);
+		ham = new BagOfWords(hamFile);
+		totalSize = this.getDictionarySize();	// total dictionary size of spam and ham bag-of-words
+		totalLines = spam.lines + ham.lines;	// total number of message lines of spam and ham bag-of-words
 	}
 
 	public void filterSpam(File file){
@@ -28,15 +32,15 @@ public class SpamFilter{
 		double
 			pWs = 1.0, 		// P(message|spam)
 			pWh = 1.0, 		// P(message|ham)		
-			pSpam = (double)(spam.lines + this.k) / (double)(totalLines + (2*k)),		// P(spam)
-			pHam = (double)(ham.lines + this.k) / (double)(totalLines + (2*k)),			// P(ham)
+			pSpam = (double)(spam.lines + this.k) / (double)(totalLines + (2 * k)),		// P(spam)
+			pHam = (double)(ham.lines + this.k) / (double)(totalLines + (2 * k)),		// P(ham)
 			pSm = 0.0; 		// P(spam|message)
 
 		for(String msg : input){
 			int num = 0;
 			String[] string = msg.split(" ");		// split message
 
-			for(String m : string){					// checks if word is new
+			for(String m : string){				// checks if word is new
 				if(!spam.bagOfWords.containsKey(m) && !ham.bagOfWords.containsKey(m)) num++; 
 			}
 
@@ -97,8 +101,8 @@ public class SpamFilter{
 
 	public void filter(){
 		for(String key : this.message.keySet()){
-			if(this.message.get(key) > 0.5) this.type.put(key, "SPAM");
-			else this.type.put(key, "HAM");
+			if(this.message.get(key) > 0.5) this.type.put(key, "SPAM");	// categorizes message as spam
+			else this.type.put(key, "HAM");					// categorizes message as ham
 		}
 	}
 
@@ -123,8 +127,8 @@ public class SpamFilter{
 	}
 
 	public static void main(String[] args){
-		String spam = args[1];
-		String ham = args[2];
+		String spam = args[1];	// second argument for spam training data
+		String ham = args[2];	// third argument for ham training data
 		SpamFilter spamfilter = new SpamFilter(spam, ham);
 		
 		spamfilter.filterSpam(new File(args[0])); // first argument for input file

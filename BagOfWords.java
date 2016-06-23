@@ -1,5 +1,3 @@
-//import java.io.*;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.File;
@@ -11,17 +9,13 @@ import java.util.Scanner;
 
 public class BagOfWords{
 
-	Hashtable<String, Integer> bagOfWords = new Hashtable<String, Integer>();	// word, freq
-	ArrayList<String> words = new ArrayList<String>();							// list
+	Hashtable<String, Integer> bagOfWords = new Hashtable<String, Integer>();	// Hashtable(word, frequency)
+	ArrayList<String> words = new ArrayList<String>();
 	int lines, dictionarySize, totalWords;
 
-
 	public BagOfWords(String input){
-		try{
-			loadWords(new File(input));
-		} catch(Exception e){
-			e.printStackTrace();
-		}
+		try loadWords(new File(input));
+		catch(Exception e) e.printStackTrace();
 
 		bagOfWords = listWords(words);
 		dictionarySize = bagOfWords.keySet().size();
@@ -48,9 +42,7 @@ public class BagOfWords{
 			FileReader read = new FileReader(file);
 			BufferedReader buffer = new BufferedReader(read);
 
-			while(buffer.readLine() != null){					// while file is not empty
-				this.lines++;
-			}
+			while(buffer.readLine() != null) this.lines++;
 
 			buffer.close();
 		} catch(Exception e){
@@ -59,21 +51,16 @@ public class BagOfWords{
 		}
 
 		return true;
-
 	}
 
 	public Hashtable<String, Integer> listWords(ArrayList<String> w){
 		Hashtable<String, Integer> table = new Hashtable<String, Integer>();
 		
 		for(String s: w){
-			if(table.containsKey(s)){
-				table.put(s, table.get(s)+1); // new word
-			} else{
-				table.put(s, 1);
-			}
+			if(table.containsKey(s)) table.put(s, table.get(s)+1);
+			else table.put(s, 1);					// new word
 		}
 
 		return table;
 	}
-		
 }

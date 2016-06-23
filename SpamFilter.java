@@ -15,9 +15,9 @@ public class SpamFilter{
 	Hashtable<String, String> type = new Hashtable<String, String>();
 	int totalSize, totalLines, k;
 
-	public SpamFilter(){
-		spam = new BagOfWords(args[1]); // second argument for spam training data
-		ham = new BagOfWords(args[2]); // third argument for ham training data
+	public SpamFilter(String spamFile, String hamFile){
+		spam = new BagOfWords(spamFile); // second argument for spam training data
+		ham = new BagOfWords(hamFile); // third argument for ham training data
 		totalSize = this.getDictionarySize();
 		totalLines = spam.lines + ham.lines;
 	}
@@ -55,7 +55,6 @@ public class SpamFilter{
 			pSm = (pWs * pSpam) / ((pWs * pSpam) + (pWh * pHam));	// P(spam|message)
 			message.put(msg, pSm);
 		}
-
 	}
 
 	public int getDictionarySize(){
@@ -124,7 +123,10 @@ public class SpamFilter{
 	}
 
 	public static void main(String[] args){
-		SpamFilter spamfilter = new SpamFilter();
+		String spam = args[1];
+		String ham = args[2];
+		SpamFilter spamfilter = new SpamFilter(spam, ham);
+		
 		spamfilter.filterSpam(new File(args[0])); // first argument for input file
 		spamfilter.filter();
 		spamfilter.saveOutput();

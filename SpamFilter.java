@@ -102,7 +102,7 @@ public class SpamFilter{
 	public void filter(){
 		for(String key : this.message.keySet()){
 			if(this.message.get(key) > 0.5) this.type.put(key, "SPAM");	// categorizes message as spam
-			else this.type.put(key, "HAM");					// categorizes message as ham
+			else this.type.put(key, "HAM");								// categorizes message as ham
 		}
 	}
 
@@ -115,7 +115,7 @@ public class SpamFilter{
 			BufferedWriter buffer = new BufferedWriter(writer);
 
 			for(String key : this.type.keySet()){
-				buffer.write(key + " " + this.type.get(key) + "\n");
+				buffer.write(key + " - " + this.type.get(key) + "\n");
 			}
 
 			buffer.close();

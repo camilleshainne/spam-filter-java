@@ -1,6 +1,6 @@
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.regex.Matcher;
@@ -14,8 +14,11 @@ public class BagOfWords{
 	int lines, dictionarySize, totalWords;
 
 	public BagOfWords(String input){
-		try loadWords(new File(input));
-		catch(Exception e) e.printStackTrace();
+		try {
+			loadWords(new File(input));
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 
 		bagOfWords = listWords(words);
 		dictionarySize = bagOfWords.keySet().size();
